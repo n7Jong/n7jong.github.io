@@ -14,14 +14,20 @@
       <HomeSlide :class="getSlideClass(0)" @navigate="navigateToSlide" />
       <AboutSlide :class="getSlideClass(1)" :stats="stats" />
       <SkillsSlide :class="getSlideClass(2)" :skills="skills" :is-active="currentSlide === 2" />
-      <ProjectsSlide :class="getSlideClass(3)" :projects="projects" />
+      <ProjectsSlide :class="getSlideClass(3)" :projects="projects" @view-project="openProjectDetail" />
       <ContactSlide :class="getSlideClass(4)" 
                     :contact-details="contactDetails" 
                     :social-links="socialLinks" />
+      
+      <!-- Project Detail Page -->
+      <ProjectDetail v-if="showProjectDetail" 
+                     :slide-class="'slide active'" 
+                     @close="closeProjectDetail" />
     </div>
 
     <!-- Navigation Arrows -->
     <NavigationArrows 
+      v-if="!showProjectDetail"
       :is-first-slide="currentSlide === 0"
       :is-last-slide="currentSlide === totalSlides - 1"
       @prev="prevSlide"
@@ -29,7 +35,7 @@
     />
 
     <!-- Slide Indicators -->
-    <div class="slide-indicators">
+    <div v-if="!showProjectDetail" class="slide-indicators">
       <span v-for="index in totalSlides" 
             :key="index"
             class="indicator" 
@@ -49,12 +55,14 @@ import AboutSlide from './components/AboutSlide.vue';
 import SkillsSlide from './components/SkillsSlide.vue';
 import ProjectsSlide from './components/ProjectsSlide.vue';
 import ContactSlide from './components/ContactSlide.vue';
+import ProjectDetail from './components/ProjectDetail.vue';
 
 // Reactive state
 const currentSlide = ref(0);
 const totalSlides = ref(5);
 const isAnimating = ref(false);
 const mobileMenuOpen = ref(false);
+const showProjectDetail = ref(false);
 
 // Navigation items
 const navItems = ['Home', 'About', 'Skills', 'Projects', 'Contact'];
@@ -68,10 +76,10 @@ const stats = [
 
 // Skills data
 const skills = [
-  { name: 'HTML5', icon: 'fab fa-html5', progress: '95%' },
-  { name: 'CSS3', icon: 'fab fa-css3-alt', progress: '90%' },
+  { name: 'HTML5', icon: 'fab fa-html5', progress: '100%' },
+  { name: 'Tailwind CSS', icon: 'fab fa-tailwind-css', progress: '75%' },
   { name: 'JavaScript', icon: 'fab fa-js', progress: '85%' },
-  { name: 'React', icon: 'fab fa-react', progress: '80%' },
+  { name: 'React', icon: 'fab fa-react', progress: '0%' },
   { name: 'Node.js', icon: 'fab fa-node', progress: '75%' },
   { name: 'Databases', icon: 'fas fa-database', progress: '70%' },
   { name: 'UI/UX Design', icon: 'fab fa-figma', progress: '85%' },
@@ -81,41 +89,11 @@ const skills = [
 // Projects data
 const projects = [
   {
-    title: 'E-Commerce Platform',
-    description: 'A full-featured online shopping platform with payment integration and admin dashboard.',
-    icon: 'fas fa-shopping-cart',
-    tags: ['React', 'Node.js', 'MongoDB']
-  },
-  {
-    title: 'Analytics Dashboard',
-    description: 'Real-time data visualization dashboard with interactive charts and reports.',
-    icon: 'fas fa-chart-line',
-    tags: ['Vue.js', 'D3.js', 'Firebase']
-  },
-  {
-    title: 'Mobile App Design',
-    description: 'Modern and intuitive mobile app design with seamless user experience.',
-    icon: 'fas fa-mobile-alt',
-    tags: ['Figma', 'UI/UX', 'Prototype']
-  },
-  {
-    title: 'Personal Blog',
-    description: 'A responsive blog platform with markdown support and comment system.',
+    title: 'UC InTTO Website',
+    description: 'My First Project as Internship Developer for University of the Cordilleras - Innovation Technology and Transfer Office.',
     icon: 'fas fa-blog',
-    tags: ['Next.js', 'Tailwind', 'PostgreSQL']
+    tags: ['HTML5', 'JavaScript', 'Tailwind CSS']
   },
-  {
-    title: 'Event Manager',
-    description: 'Comprehensive event management system with booking and notification features.',
-    icon: 'fas fa-calendar-alt',
-    tags: ['Angular', 'Express', 'MySQL']
-  },
-  {
-    title: 'Portfolio Website',
-    description: 'Creative portfolio website for a photographer with image gallery and booking form.',
-    icon: 'fas fa-camera',
-    tags: ['HTML', 'CSS', 'JavaScript']
-  }
 ];
 
 // Contact details
@@ -145,6 +123,11 @@ const getSlideClass = (slideIndex) => {
 const navigateToSlide = (slideIndex) => {
   if (isAnimating.value || slideIndex < 0 || slideIndex >= totalSlides.value) return;
   
+  // Close project detail if open
+  if (showProjectDetail.value) {
+    showProjectDetail.value = false;
+  }
+  
   isAnimating.value = true;
   currentSlide.value = slideIndex;
   
@@ -158,12 +141,24 @@ const navigateToSlide = (slideIndex) => {
 };
 
 const prevSlide = () => {
+  // Close project detail if open
+  if (showProjectDetail.value) {
+    showProjectDetail.value = false;
+    return;
+  }
+  
   if (currentSlide.value > 0) {
     navigateToSlide(currentSlide.value - 1);
   }
 };
 
 const nextSlide = () => {
+  // Close project detail if open
+  if (showProjectDetail.value) {
+    showProjectDetail.value = false;
+    return;
+  }
+  
   if (currentSlide.value < totalSlides.value - 1) {
     navigateToSlide(currentSlide.value + 1);
   }
@@ -175,6 +170,14 @@ const toggleMobileMenu = () => {
 
 const handleToggleMenu = (isOpen) => {
   mobileMenuOpen.value = isOpen;
+};
+
+const openProjectDetail = () => {
+  showProjectDetail.value = true;
+};
+
+const closeProjectDetail = () => {
+  showProjectDetail.value = false;
 };
 
 // Keyboard navigation

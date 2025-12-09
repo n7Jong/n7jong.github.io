@@ -10,17 +10,23 @@
         <div class="project-tags">
           <span class="tag" v-for="tag in project.tags" :key="tag">{{ tag }}</span>
         </div>
-        <a href="#" class="project-link">View Project <i class="fas fa-arrow-right"></i></a>
+        <a href="#" class="project-link" @click.prevent="$emit('view-project')">
+          View Project <i class="fas fa-arrow-right"></i>
+        </a>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { defineEmits } from 'vue';
+
 defineProps({
   projects: {
     type: Array,
     required: true
   }
 });
+
+defineEmits(['view-project']);
 </script>

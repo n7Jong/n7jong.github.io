@@ -1325,3 +1325,32 @@ body {
     background: var(--color-5);
     color: var(--bg-primary);
 }
+
+/* ============================================
+   CUSTOM TAILWIND CSS ICON
+   ============================================ */
+.fa-tailwind-css::before {
+    content: '';
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='%2338bdf8'%3E%3Cpath d='M9 13.7q1.4-5.6 7-5.6c5.6 0 6.3 4.2 9 4.9q4.05 1.05 5.7-2.8-1.4 5.6-7 5.6c-5.6 0-6.3-4.2-9-4.9q-4.05-1.05-5.7 2.8zM2 22.1q1.4-5.6 7-5.6c5.6 0 6.3 4.2 9 4.9q4.05 1.05 5.7-2.8-1.4 5.6-7 5.6c-5.6 0-6.3-4.2-9-4.9q-4.05-1.05-5.7 2.8z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: -0.125em;
+}
+
+/* Tailwind CSS icon color variations */
+.skill-icon .fa-tailwind-css::before {
+    width: 1em;
+    height: 1em;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='%2369888e'%3E%3Cpath d='M9 13.7q1.4-5.6 7-5.6c5.6 0 6.3 4.2 9 4.9q4.05 1.05 5.7-2.8-1.4 5.6-7 5.6c-5.6 0-6.3-4.2-9-4.9q-4.05-1.05-5.7 2.8zM2 22.1q1.4-5.6 7-5.6c5.6 0 6.3 4.2 9 4.9q4.05 1.05 5.7-2.8-1.4 5.6-7 5.6c-5.6 0-6.3-4.2-9-4.9q-4.05-1.05-5.7 2.8z'/%3E%3C/svg%3E");
+}
+
+.tech-tag .fa-tailwind-css::before,
+.project-icon-large .fa-tailwind-css::before {
+    width: 1em;
+    height: 1em;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='%2338bdf8'%3E%3Cpath d='M9 13.7q1.4-5.6 7-5.6c5.6 0 6.3 4.2 9 4.9q4.05 1.05 5.7-2.8-1.4 5.6-7 5.6c-5.6 0-6.3-4.2-9-4.9q-4.05-1.05-5.7 2.8zM2 22.1q1.4-5.6 7-5.6c5.6 0 6.3 4.2 9 4.9q4.05 1.05 5.7-2.8-1.4 5.6-7 5.6c-5.6 0-6.3-4.2-9-4.9q-4.05-1.05-5.7 2.8z'/%3E%3C/svg%3E");
+}
