@@ -77,6 +77,7 @@ const stats = [
   { value: '1', label: 'Projects Completed' },
   { value: '6', label: 'Happy Clients' }
 ];
+// Random push
 
 // Skills data
 const skills = [
