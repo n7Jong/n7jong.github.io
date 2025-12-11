@@ -43,13 +43,34 @@
         <label for="message">Your Message</label>
         <textarea id="message" v-model="formData.message" rows="5" required></textarea>
       </div>
-      <button type="submit" class="btn btn-primary">Send Message</button>
+      
+      <!-- Success Message -->
+      <div v-if="submitMessage" class="success-message">
+        <i class="fas fa-check-circle"></i>
+        {{ submitMessage }}
+      </div>
+      
+      <!-- Error Message -->
+      <div v-if="submitError" class="error-message">
+        <i class="fas fa-exclamation-circle"></i>
+        {{ submitError }}
+      </div>
+      
+      <button type="submit" class="btn btn-primary" :disabled="isSubmitting">
+        <span v-if="!isSubmitting">
+          <i class="fas fa-paper-plane"></i> Send Message
+        </span>
+        <span v-else>
+          <i class="fas fa-spinner fa-spin"></i> Sending...
+        </span>
+      </button>
     </form>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import emailjs from '@emailjs/browser';
 
 defineProps({
   contactDetails: {
@@ -69,14 +90,50 @@ const formData = ref({
   message: ''
 });
 
-const handleSubmit = () => {
-  alert(`Thank you, ${formData.value.name}! Your message has been sent. I'll get back to you soon.`);
-  
-  formData.value = {
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  };
+const isSubmitting = ref(false);
+const submitMessage = ref('');
+const submitError = ref('');
+
+const handleSubmit = async () => {
+  // Clear previous messages
+  submitMessage.value = '';
+  submitError.value = '';
+  isSubmitting.value = true;
+
+  try {
+    // EmailJS configuration
+    const serviceID = 'service_uongl5o';
+    const templateID = 'template_4zt7d8c';
+    const publicKey = '5_58lLK_G13DczpUQ';
+
+    // Prepare template parameters
+    const templateParams = {
+      from_name: formData.value.name,
+      from_email: formData.value.email,
+      subject: formData.value.subject,
+      message: formData.value.message,
+      to_name: 'Al John Orpilla',
+    };
+
+    // Send email via EmailJS
+    await emailjs.send(serviceID, templateID, templateParams, publicKey);
+
+    // Success
+    submitMessage.value = `Thank you, ${formData.value.name}! Your message has been sent successfully. I'll get back to you soon.`;
+    
+    // Reset form
+    formData.value = {
+      name: '',
+      email: '',
+      subject: '',
+      message: ''
+    };
+
+  } catch (error) {
+    console.error('EmailJS Error:', error);
+    submitError.value = 'Failed to send message. Please try again or contact me directly via email.';
+  } finally {
+    isSubmitting.value = false;
+  }
 };
 </script>

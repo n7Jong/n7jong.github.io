@@ -11,6 +11,7 @@
     "dev:all": "concurrently \"npm run dev\" \"npm run server\""
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@google/generative-ai": "^0.1.3",
     "axios": "^1.13.2",
     "cors": "^2.8.5",
