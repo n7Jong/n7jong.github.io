@@ -43,9 +43,6 @@
             @click="navigateToSlide(index - 1)">
       </span>
     </div>
-
-    <!-- Chatbot Widget -->
-    <ChatbotWidget />
   </div>
 </template>
 
@@ -59,7 +56,6 @@ import SkillsSlide from './components/SkillsSlide.vue';
 import ProjectsSlide from './components/ProjectsSlide.vue';
 import ContactSlide from './components/ContactSlide.vue';
 import ProjectDetail from './components/ProjectDetail.vue';
-import ChatbotWidget from './components/ChatbotWidget.vue';
 
 // Reactive state
 const currentSlide = ref(0);
