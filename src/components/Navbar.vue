@@ -20,7 +20,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { gsap } from 'gsap';
 
 const props = defineProps({
   navItems: {
@@ -53,4 +54,21 @@ const handleNavigate = (index) => {
     emit('toggle-menu', false);
   }
 };
+
+onMounted(() => {
+  let tl = gsap.timeline();
+  tl.from(".navbar", {
+    y: -100,
+    duration: 0.8,
+    opacity: 0,
+    ease: "power2.out"
+  });
+  tl.from(".logo, .nav-menu li", {
+    y: -20,
+    opacity: 0,
+    duration: 0.5,
+    stagger: 0.2,
+    ease: "back.out(1.7)"
+  });
+});
 </script>
